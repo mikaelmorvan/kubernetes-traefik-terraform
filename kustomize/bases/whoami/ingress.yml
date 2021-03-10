@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`testnova.zpu.sh`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: whoami
+          port: 80
+  tls:
+    certResolver: myresolver
+    domains:
+      - main: testnova.zpu.sh

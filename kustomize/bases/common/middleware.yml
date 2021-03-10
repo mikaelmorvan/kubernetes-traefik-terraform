@@ -1,0 +1,29 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: staging
+spec:
+  chain:
+    middlewares:
+    - name: https-only
+    - name: cors-header
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: production
+spec:
+  chain:
+    middlewares:
+    - name: https-only
+    - name: cors-header
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: https-only
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true

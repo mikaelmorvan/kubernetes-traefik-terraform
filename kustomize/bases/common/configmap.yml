@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-configmap
+data:
+  cms_api_url: https://test.toto.io/api/main
+  user_api_url: https://test.toto.io/api/user

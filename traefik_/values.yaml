@@ -1,0 +1,31 @@
+additionalArguments:
+  - "--log.level=ERROR"
+  - "--certificatesresolvers.myresolver.acme.email=mikaelmorvan@gmail.com"
+  - "--certificatesresolvers.myresolver.acme.storage=/data/acme.json"
+  - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+  - "--entrypoints.web.http.redirections.entryPoint.to=:443"  
+  - "--entrypoints.web.http.redirections.entryPoint.permanent=true"
+  - "--entrypoints.web.address=:8000"
+  - "--entrypoints.websecure.address=:8443"
+  - "--accesslog=false"
+  - "--tracing=false"
+
+deployment:
+  enabled: true
+  # Number of pods of the deployment
+  replicas: 1
+  # Additional initContainers (e.g. for setting file permission as shown below)
+  initContainers:
+    - name: volume-permissions
+      image: busybox:1.31.1
+      command: ["sh", "-c", "chmod -Rv 600 /data/*"]
+      volumeMounts:
+        - name: data
+          mountPath: /data
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 128Mi
+  path: /data
+  annotations: {}

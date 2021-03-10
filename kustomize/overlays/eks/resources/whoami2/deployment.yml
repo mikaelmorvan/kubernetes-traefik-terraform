@@ -1,0 +1,25 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: whoami2
+  labels:
+    app: whoami2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whoami2
+  template:
+    metadata:
+      labels:
+        app: whoami2
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: whoami2
+          image: docker.io/containous/whoami:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
